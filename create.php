@@ -3,15 +3,20 @@
 
 		require "connection.php";
 
-		$sql = "INSERT INTO users(fullname, email, password) VALUES (:fullname, :email, :password)";
+		$sql = "INSERT INTO users(fullname, username, email, password) VALUES (:fullname, :username, :email, :password)";
 
-		$pdo_statement = $pdo_conn->prepare( $sql );
 
-		$result = $pdo_statement->execute( array(':fullname'=>$_POST['fullname'], ':email'=>$_POST['email'], ':password'=>$_POST['confirmPass']));
-
-		if(! empty($result))
+		if( isset($_POST['register']))
 		{
-			header('location:index.php');
+			$pdo_statement = $pdo_conn->prepare( $sql );
+			$result = $pdo_statement->execute( array(':fullname'=>$_POST['fullname'], ':username'=>$_POST['username'], ':email'=>$_POST['email'], ':password'=>$_POST['confirmPass']));
+
+
+
+			if(! empty($result))
+			{
+				header('location:index.php');
+			}
 		}
 	
 ?>
@@ -29,6 +34,9 @@
 				<form action="#" method="POST">
 					<div class="form-group">
 						<input type="text" name="fullname" placeholder="Full Name" class="form-control">
+					</div>
+					<div class="form-group">
+						<input type="text" name="username" placeholder="Username" class="form-control">
 					</div>
 					<div class="form-group">
 						<input type="email" name="email" placeholder="Email" class="form-control">
